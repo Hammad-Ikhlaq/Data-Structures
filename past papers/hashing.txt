@@ -1,0 +1,90 @@
+#include<iostream>
+#include <string>
+using namespace  std;
+
+struct hasTable
+{
+	int rool_no;
+	string name;
+	string fname;
+
+	hasTable *ptr = nullptr ;
+};
+
+int hash_Key_generator(int rool)
+{
+	return (rool % 10);
+}
+
+void insertion_hashTable(hasTable h[],int key ,int rool)
+{
+
+	if (h[key].ptr==nullptr)
+	{
+
+		h[key].rool_no = rool;
+
+		cout << "Enter Name of Student :  ";
+		cin >> h[key].name;
+
+		cout << "Enter Father Name of Student :  ";
+		cin >> h[key].fname;
+
+	}
+	else
+	{
+		collsion(h, key, rool, h[key].ptr);
+
+	}
+
+	return;
+
+}
+hasTable *row_creator(int rool)
+{
+	hasTable *row = new hasTable();
+
+	row->rool_no = rool;
+
+	cout << "Enter Name of Student :  ";
+	cin >> row->name;
+
+	cout << "Enter Father Name of Student :  ";
+	cin >> row->fname;
+
+	row->ptr = nullptr;
+
+	return row;
+
+}
+
+void collsion(hasTable h[], int key, int rool, hasTable * ptr)
+{
+	if (h[key].ptr==nullptr)
+	{
+		h[key].ptr = row_creator(rool);
+	}
+	else
+	{
+		collsion(h, key, rool, ptr->ptr);
+	}
+}
+
+int main()
+{
+	hasTable h[10];
+	int rool, key = 0;
+
+	cout << "Enter Roll Number of Student :  ";
+	cin >> rool;
+
+
+	
+	key = hash_Key_generator(rool);
+
+	insertion_hashTable(h, key, rool);
+
+
+	system("pause");
+	return 0;
+}
